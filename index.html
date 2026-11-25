@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TA’RIB – Kamus Digital Arab Tematik</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF3F1;--surf:#fff;--ink:#12302C;--mute:#5B7571;--line:#D3E0DC;--pri:#0F5A50;--pri-ink:#fff;--gold:#B7862B;--soft:#DCEBE6;--ok:#1B7F4B;--bad:#B3392F;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1B19;--surf:#132825;--ink:#E4EFEC;--mute:#8FA9A4;--line:#25403C;--pri:#4DB8A5;--pri-ink:#06201C;--gold:#E0B454;--soft:#1A3430;--ok:#5ED394;--bad:#F08A80}}
+:root[data-theme="dark"]{--bg:#0C1B19;--surf:#132825;--ink:#E4EFEC;--mute:#8FA9A4;--line:#25403C;--pri:#4DB8A5;--pri-ink:#06201C;--gold:#E0B454;--soft:#1A3430;--ok:#5ED394;--bad:#F08A80}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Plus Jakarta Sans",system-ui,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ar{font-family:Amiri,"Noto Naskh Arabic","Traditional Arabic",serif;direction:rtl}
+.app{max-width:760px;margin:0 auto;padding:0 16px 96px}
+header{display:flex;align-items:center;gap:12px;padding:18px 0 8px}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--pri);color:var(--pri-ink);display:grid;place-items:center;font-size:28px;line-height:1;padding-bottom:6px}
+header h1{font-size:16px;margin:0}
+header small{color:var(--mute);font-size:12px}
+.sp{flex:1}
+.ic{border:1px solid var(--line);background:var(--surf);border-radius:10px;width:38px;height:38px}
+.hero{background:var(--pri);color:var(--pri-ink);border-radius:20px;padding:22px 20px;margin:8px 0 16px;position:relative;overflow:hidden}
+.hero .ar{font-size:30px;line-height:1.5;margin:0}
+.hero h2{margin:4px 0 4px;font-size:21px}
+.hero p{margin:0 0 16px;opacity:.85;font-size:14px}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border:18px solid color-mix(in srgb,var(--gold) 55%,transparent);border-radius:50%;transform:rotate(45deg);border-radius:28px}
+.search{display:flex;gap:8px;background:var(--surf);border-radius:14px;padding:4px 4px 4px 14px;align-items:center;position:relative;z-index:1}
+.search input{flex:1;border:0;background:none;font:inherit;color:var(--ink);padding:10px 0;min-width:0}
+.search input:focus{outline:none}
+.search:focus-within{box-shadow:0 0 0 2px var(--gold)}
+h3{font-size:16px;margin:22px 0 10px}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.cat{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:left;display:flex;flex-direction:column;gap:2px}
+.cat[aria-pressed="true"]{border-color:var(--pri);background:var(--soft)}
+.cat .ar{font-size:22px;color:var(--pri);text-align:right;width:100%}
+.cat b{font-size:14px}.cat span{font-size:12px;color:var(--mute)}
+.list{display:flex;flex-direction:column;gap:8px}
+.row{display:flex;align-items:center;gap:12px;background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:12px 14px;width:100%;text-align:left}
+.row .ar{font-size:26px;min-width:96px;color:var(--pri);text-align:right}
+.row .m{flex:1;min-width:0}.row .m b{display:block}.row .m small{color:var(--mute)}
+.tag{font-size:11px;border-radius:99px;padding:2px 9px;background:var(--soft);color:var(--pri);font-weight:500}
+.star{background:none;border:0;font-size:20px;color:var(--mute);padding:6px}
+.star[aria-pressed="true"]{color:var(--gold)}
+.fil{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 12px}
+.chip{border:1px solid var(--line);background:var(--surf);border-radius:99px;padding:5px 12px;font-size:13px}
+.chip[aria-pressed="true"]{background:var(--pri);color:var(--pri-ink);border-color:var(--pri)}
+.btn{background:var(--pri);color:var(--pri-ink);border:0;border-radius:12px;padding:11px 18px;font-weight:700}
+.btn.o{background:none;color:var(--pri);border:1px solid var(--pri)}
+.empty{text-align:center;color:var(--mute);padding:36px 12px;border:1px dashed var(--line);border-radius:14px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:16px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stats div{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.stats b{display:block;font-size:22px;color:var(--pri)}.stats span{font-size:12px;color:var(--mute)}
+.bar{height:8px;background:var(--soft);border-radius:9px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--gold)}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--surf);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:5}
+nav div{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav button{background:none;border:0;padding:9px 0 8px;font-size:12px;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:1px}
+nav button span{font-size:19px}
+nav button[aria-current="page"]{color:var(--pri);font-weight:700}
+.sheet-bg{position:fixed;inset:0;background:rgba(5,20,18,.55);display:none;align-items:flex-end;justify-content:center;z-index:10}
+.sheet-bg.on{display:flex}
+.sheet{background:var(--bg);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:22px 22px 0 0;padding:18px 18px calc(24px + env(safe-area-inset-bottom,0px))}
+@media(min-width:600px){.sheet-bg{align-items:center}.sheet{border-radius:22px;max-height:88%}}
+.big{font-size:56px;line-height:1.6;text-align:center;color:var(--pri);margin:4px 0 0}
+.lat{text-align:center;color:var(--mute);font-style:italic}
+.mean{text-align:center;font-size:20px;font-weight:700;margin:2px 0 12px}
+.ex{border-right:4px solid var(--gold);background:var(--surf);border-radius:10px;padding:10px 14px;margin:8px 0}
+.ex .ar{font-size:24px}
+.acts{display:flex;gap:8px;justify-content:center;margin:10px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.opt{display:block;width:100%;text-align:left;background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,var(--surf))}
+.opt.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 15%,var(--surf))}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}.game{background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:left;display:flex;flex-direction:column;gap:2px}.game span{font-size:26px}.game small{color:var(--mute);font-size:12px}.game:hover{border-color:var(--gold)}.wotd{border-color:var(--gold)}.fc{background:var(--surf);border:2px solid var(--line);border-radius:20px;padding:22px 14px;text-align:center;min-height:240px;display:flex;flex-direction:column;justify-content:center;gap:6px;cursor:pointer;margin:12px 0}.badges{display:flex;flex-wrap:wrap;gap:8px}.bdg{background:var(--soft);border:1px solid var(--gold);border-radius:99px;padding:5px 12px;font-size:13px}.bdg.off{opacity:.4;border-color:var(--line)}.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:90%;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:13px;z-index:20;display:none;text-align:center}.toast.on{display:block}details{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:8px 0}summary{font-weight:700;cursor:pointer}details p{margin:8px 0 0;color:var(--mute)}
+:root{--isim:#1D74B8;--fil:#D2601A}
+.row{position:relative}.row:hover{box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.row.isim{border-left:5px solid var(--isim)}.row.fl{border-left:5px solid var(--fil)}
+.rb{display:flex;align-items:center;gap:12px;flex:1;min-width:0;background:none;border:0;padding:0;text-align:left}
+.row .ar{font-size:28px;width:108px;min-width:108px;flex:none;white-space:nowrap;height:62px;display:inline-flex;align-items:center;justify-content:center;line-height:1.2}.row .m small{display:block;font-style:italic}
+.bd{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center}.bd{height:22px;overflow:visible}.bd{flex-wrap:nowrap}.row .tag{display:inline-flex;align-items:center;height:22px;line-height:18px;white-space:nowrap;flex:none}.row .tp{display:block;height:22px;line-height:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.row .tag{padding:0 9px}.row .tp{padding:0 9px}
+.tag.isim{background:color-mix(in srgb,var(--isim) 16%,var(--surf));color:color-mix(in srgb,var(--isim) 62%,var(--ink))}
+.tag.fl{background:color-mix(in srgb,var(--fil) 16%,var(--surf));color:color-mix(in srgb,var(--fil) 62%,var(--ink))}
+.tp{font-size:11px;border-radius:99px;padding:2px 9px;line-height:1.5;display:inline-flex;align-items:center;gap:4px;font-weight:500;background:color-mix(in srgb,hsl(var(--h) 65% 50%) 15%,var(--surf))}
+.cnt{color:var(--mute);font-size:13px;margin:10px 2px 8px}
+.chip{display:inline-flex;align-items:center;gap:6px;flex:none}
+.chip.j{font-weight:600;padding:6px 14px}
+.chip.j.isim{border-color:var(--isim);color:color-mix(in srgb,var(--isim) 62%,var(--ink))}
+.chip.j.fl{border-color:var(--fil);color:color-mix(in srgb,var(--fil) 62%,var(--ink))}
+.chip.j.isim[aria-pressed="true"]{background:var(--isim);color:#fff}
+.chip.j.fl[aria-pressed="true"]{background:var(--fil);color:#fff}
+.chip.t{border-radius:14px;padding:6px 12px 6px 7px;background:color-mix(in srgb,hsl(var(--h) 65% 50%) 12%,var(--surf));border-color:color-mix(in srgb,hsl(var(--h) 65% 50%) 40%,var(--line))}
+.chip.t .ti{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-size:17px;background:color-mix(in srgb,hsl(var(--h) 65% 50%) 24%,var(--surf))}
+.chip.t .tn{display:flex;flex-direction:column;line-height:1.2;text-align:left;font-size:13px;font-weight:600}
+.chip.t .tn .ar{line-height:1.7;font-size:14px;font-weight:400;color:var(--mute);direction:rtl}
+.chip.t[aria-pressed="true"]{background:hsl(var(--h) 55% 36%);color:#fff;border-color:transparent}
+.chip.t[aria-pressed="true"] .ti{background:#ffffff30}.chip.t[aria-pressed="true"] .tn .ar{color:#ffffffcc}
+.fil:has(.chip.s){flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.cat{border-top:3px solid hsl(var(--h) 60% 55%)}
+.ctop{display:flex;justify-content:space-between;align-items:center;width:100%}
+.cic{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-size:19px;background:color-mix(in srgb,hsl(var(--h) 65% 50%) 22%,var(--surf))}
+.cat .ar{width:auto;color:color-mix(in srgb,hsl(var(--h) 60% 42%) 70%,var(--ink))}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo ar" aria-hidden="true">ع</div>
+    <div><h1 style="font-size:20px;letter-spacing:.04em">TA’RIB</h1><small>Ta’allami al-‘Arabiyyah bi al-Mauḍū‘āt</small></div>
+    <div class="sp"></div>
+    <button class="ic" data-guide="1" aria-label="Panduan penggunaan">?</button> <button class="ic" id="theme" aria-label="Ganti tema warna">◐</button>
+  </header>
+  <main id="main"></main>
+</div>
+<nav aria-label="Navigasi utama"><div id="nav"></div></nav>
+<div class="toast" id="toast" role="status"></div>
+<div class="sheet-bg" id="bg"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+
+<script>
+var CATS=[["sekolah","الْمَدْرَسَةُ","Sekolah","Pendidikan dan kelas"],["keluarga","الْأُسْرَةُ","Keluarga","Anggota keluarga"],["alam","الطَّبِيعَةُ","Alam","Lingkungan dan alam"],["profesi","الْمِهْنَةُ","Profesi","Pekerjaan dan cita-cita"],["rumah","الْبَيْتُ","Rumah","Ruangan dan perabot"],["makanan","الطَّعَامُ","Makanan","Makanan dan minuman"],["kenal","التَّعَارُفُ","Perkenalan","Salam dan sapaan"],["kampus","الْجَامِعَةُ","Kampus","Kehidupan mahasiswa"],["hobi","الْهِوَايَةُ","Hobi","Kegiatan favorit"],["masjid","الْمَسْجِدُ","Masjid","Rumah ibadah"],["pustaka","الْمَكْتَبَةُ","Perpustakaan","Buku dan bacaan"],["hewan","الْحَيَوَانَاتُ","Hewan","Binatang di sekitar kita"],["olahraga","الرِّيَاضَةُ","Olahraga","Gerak dan permainan"],["sehat","الصِّحَّةُ","Kesehatan","Tubuh dan pengobatan"],["safar","السَّفَرُ","Perjalanan","Bepergian dan transportasi"],["tekno","التِّكْنُولُوجِيَا","Teknologi","Perangkat digital"],["internet","الْإِنْتَرْنِتُ","Internet","Dunia daring"],["media","الْإِعْلَامُ","Media","Berita dan siaran"],["ibadah","الْعِبَادَةُ","Ibadah","Amalan harian"],["sosial","الْمُجْتَمَعُ","Masyarakat","Hidup bersama"]];
+// [arab, latin, arti, jenis, kategori, contoh arab, arti contoh, sinonim, antonim]
+var W=[
+["مَدْرَسَةٌ","madrasatun","Sekolah","Isim","sekolah","أَنَا أَدْرُسُ فِي الْمَدْرَسَةِ","Saya belajar di sekolah.","مَعْهَدٌ","" ],
+["كِتَابٌ","kitābun","Buku","Isim","sekolah","هٰذَا كِتَابٌ جَدِيدٌ","Ini buku baru.","سِفْرٌ",""],
+["مُدَرِّسٌ","mudarrisun","Guru","Isim","sekolah","الْمُدَرِّسُ يَشْرَحُ الدَّرْسَ","Guru menjelaskan pelajaran.","مُعَلِّمٌ","طَالِبٌ"],
+["دَرَسَ","darasa","Belajar","Fi’il","sekolah","دَرَسَ الطَّالِبُ الْكِتَابَ","Siswa mempelajari buku.","تَعَلَّمَ","نَسِيَ"],
+["قَلَمٌ","qalamun","Pena","Isim","sekolah","أَكْتُبُ بِالْقَلَمِ","Aku menulis dengan pena.","",""],
+["دَفْتَرٌ","daftarun","Buku tulis","Isim","sekolah","هٰذَا دَفْتَرِي","Ini buku tulisku.","",""],
+["مِسْطَرَةٌ","mistaratun","Penggaris","Isim","sekolah","الْمِسْطَرَةُ طَوِيلَةٌ","Penggarisnya panjang.","",""],
+["مِمْحَاةٌ","mimḥātun","Penghapus","Isim","sekolah","أَيْنَ الْمِمْحَاةُ؟","Di mana penghapusnya?","",""],
+["مِحْفَظَةٌ","miḥfaẓatun","Tas sekolah","Isim","sekolah","الْمِحْفَظَةُ ثَقِيلَةٌ","Tas sekolahnya berat.","حَقِيبَةٌ",""],
+["فَصْلٌ","faṣlun","Kelas","Isim","sekolah","الْفَصْلُ نَظِيفٌ","Kelasnya bersih.","",""],
+["سَبُّورَةٌ","sabbūratun","Papan tulis","Isim","sekolah","أَكْتُبُ عَلَى السَّبُّورَةِ","Aku menulis di papan tulis.","",""],
+["طَبَاشِيرُ","ṭabāsyīru","Kapur tulis","Isim","sekolah","الطَّبَاشِيرُ أَبْيَضُ","Kapur tulisnya putih.","",""],
+["مَكْتَبٌ","maktabun","Meja","Isim","sekolah","الْكِتَابُ عَلَى الْمَكْتَبِ","Buku ada di atas meja.","طَاوِلَةٌ",""],
+["كُرْسِيٌّ","kursiyyun","Kursi","Isim","sekolah","اِجْلِسْ عَلَى الْكُرْسِيِّ","Duduklah di kursi.","",""],
+["طَالِبٌ","ṭālibun","Siswa","Isim","sekolah","الطَّالِبُ مُجْتَهِدٌ","Siswa itu rajin.","تِلْمِيذٌ","مُدَرِّسٌ"],
+["مُدِيرٌ","mudīrun","Kepala sekolah","Isim","sekolah","الْمُدِيرُ فِي الْمَكْتَبِ","Kepala sekolah ada di kantor.","",""],
+["دَرْسٌ","darsun","Pelajaran","Isim","sekolah","الدَّرْسُ سَهْلٌ","Pelajarannya mudah.","",""],
+["اِمْتِحَانٌ","imtiḥānun","Ujian","Isim","sekolah","غَدًا الِامْتِحَانُ","Besok ujian.","اِخْتِبَارٌ",""],
+["وَاجِبٌ","wājibun","Pekerjaan rumah","Isim","sekolah","أَكْتُبُ الْوَاجِبَ","Aku mengerjakan PR.","",""],
+["جَدْوَلٌ","jadwalun","Jadwal","Isim","sekolah","هٰذَا جَدْوَلُ الدُّرُوسِ","Ini jadwal pelajaran.","",""],
+["سَاحَةٌ","sāḥatun","Halaman","Isim","sekolah","نَلْعَبُ فِي السَّاحَةِ","Kami bermain di halaman.","",""],
+["مَعْمَلٌ","ma‘malun","Laboratorium","Isim","sekolah","نَذْهَبُ إِلَى الْمَعْمَلِ","Kami pergi ke laboratorium.","",""],
+["مَقْصِفٌ","maqṣifun","Kantin","Isim","sekolah","آكُلُ فِي الْمَقْصِفِ","Aku makan di kantin.","",""],
+["جَرَسٌ","jarasun","Bel","Isim","sekolah","سَمِعْتُ الْجَرَسَ","Aku mendengar bel.","",""],
+["عُطْلَةٌ","‘uṭlatun","Libur","Isim","sekolah","الْعُطْلَةُ قَرِيبَةٌ","Liburan sudah dekat.","",""],
+["دَرَجَةٌ","darajatun","Nilai","Isim","sekolah","دَرَجَتِي جَيِّدَةٌ","Nilaiku bagus.","",""],
+["فُسْحَةٌ","fusḥatun","Istirahat","Isim","sekolah","فِي الْفُسْحَةِ آكُلُ","Saat istirahat aku makan.","اِسْتِرَاحَةٌ",""],
+["زِيٌّ","ziyyun","Seragam","Isim","sekolah","أَلْبَسُ الزِّيَّ الْمَدْرَسِيَّ","Aku memakai seragam sekolah.","",""],
+["سُؤَالٌ","su’ālun","Pertanyaan","Isim","sekolah","هٰذَا سُؤَالٌ صَعْبٌ","Ini pertanyaan sulit.","","جَوَابٌ"],
+["جَوَابٌ","jawābun","Jawaban","Isim","sekolah","جَوَابُكَ صَحِيحٌ","Jawabanmu benar.","","سُؤَالٌ"],
+["شَهَادَةٌ","syahādatun","Ijazah, sertifikat","Isim","sekolah","أَخَذْتُ الشَّهَادَةَ","Aku menerima ijazah.","",""],
+["كَتَبَ","kataba","Menulis","Fi’il","sekolah","كَتَبَ الطَّالِبُ الْوَاجِبَ","Siswa menulis PR.","",""],
+["قَرَأَ","qara’a","Membaca","Fi’il","sekolah","قَرَأَتِ الْبِنْتُ الْقِصَّةَ","Anak perempuan membaca cerita.","",""],
+["فَهِمَ","fahima","Memahami","Fi’il","sekolah","فَهِمْتُ الدَّرْسَ","Aku paham pelajarannya.","عَرَفَ","جَهِلَ"],
+["حَفِظَ","ḥafiẓa","Menghafal","Fi’il","sekolah","حَفِظْتُ الْمُفْرَدَاتِ","Aku menghafal kosakata.","","نَسِيَ"],
+["سَأَلَ","sa’ala","Bertanya","Fi’il","sekolah","سَأَلَ الطَّالِبُ الْمُدَرِّسَ","Siswa bertanya kepada guru.","","أَجَابَ"],
+["أَجَابَ","ajāba","Menjawab","Fi’il","sekolah","أَجَابَ عَنِ السُّؤَالِ","Dia menjawab pertanyaan.","","سَأَلَ"],
+["عَلَّمَ","‘allama","Mengajar","Fi’il","sekolah","عَلَّمَنِي الْمُدَرِّسُ","Guru mengajariku.","","تَعَلَّمَ"],
+["نَجَحَ","najaḥa","Lulus, berhasil","Fi’il","sekolah","نَجَحَ فِي الِامْتِحَانِ","Dia lulus ujian.","","رَسَبَ"],
+["رَسَبَ","rasaba","Gagal","Fi’il","sekolah","رَسَبَ لِأَنَّهُ لَمْ يُذَاكِرْ","Dia gagal karena tidak belajar.","","نَجَحَ"],
+["أَبٌ","abun","Ayah","Isim","keluarga","أَبِي يَعْمَلُ فِي الْمَكْتَبِ","Ayahku bekerja di kantor.","وَالِدٌ","ابْنٌ"],
+["أُمٌّ","ummun","Ibu","Isim","keluarga","أُمِّي تَطْبُخُ الطَّعَامَ","Ibuku memasak makanan.","وَالِدَةٌ","بِنْتٌ"],
+["أَخٌ","akhun","Saudara laki-laki","Isim","keluarga","أَخِي يَلْعَبُ كُرَةَ الْقَدَمِ","Kakakku bermain sepak bola.","شَقِيقٌ","أُخْتٌ"],
+["أُخْتٌ","ukhtun","Saudara perempuan","Isim","keluarga","أُخْتِي تَدْرُسُ فِي الْجَامِعَةِ","Saudariku kuliah di universitas.","","أَخٌ"],
+["جَدٌّ","jaddun","Kakek","Isim","keluarga","جَدِّي يَقْرَأُ الْقُرْآنَ","Kakekku membaca Al-Qur’an.","","جَدَّةٌ"],
+["جَدَّةٌ","jaddatun","Nenek","Isim","keluarga","جَدَّتِي تَحْكِي قِصَّةً","Nenekku menceritakan sebuah kisah.","","جَدٌّ"],
+["اِبْنٌ","ibnun","Anak laki-laki","Isim","keluarga","الِابْنُ يُسَاعِدُ أَبَاهُ","Anak laki-laki membantu ayahnya.","وَلَدٌ","بِنْتٌ"],
+["بِنْتٌ","bintun","Anak perempuan","Isim","keluarga","الْبِنْتُ تُحِبُّ أُمَّهَا","Anak perempuan menyayangi ibunya.","","اِبْنٌ"],
+["عَمٌّ","‘ammun","Paman (dari ayah)","Isim","keluarga","عَمِّي مُهَنْدِسٌ","Pamanku seorang insinyur.","",""],
+["عَمَّةٌ","‘ammatun","Bibi (dari ayah)","Isim","keluarga","عَمَّتِي طَبِيبَةٌ","Bibiku seorang dokter.","",""],
+["خَالٌ","khālun","Paman (dari ibu)","Isim","keluarga","خَالِي يَزْرَعُ الْأَرُزَّ","Pamanku menanam padi.","",""],
+["خَالَةٌ","khālatun","Bibi (dari ibu)","Isim","keluarga","خَالَتِي تَطْبُخُ جَيِّدًا","Bibiku pandai memasak.","",""],
+["زَوْجٌ","zaujun","Suami","Isim","keluarga","زَوْجُهَا رَجُلٌ كَرِيمٌ","Suaminya pria dermawan.","","زَوْجَةٌ"],
+["زَوْجَةٌ","zaujatun","Istri","Isim","keluarga","زَوْجَتُهُ مُعَلِّمَةٌ","Istrinya seorang guru.","","زَوْجٌ"],
+["وَالِدَانِ","wālidāni","Kedua orang tua","Isim","keluarga","وَالِدَايَ يُحِبَّانِنِي","Kedua orang tuaku menyayangiku.","أَبَوَانِ",""],
+["طِفْلٌ","ṭiflun","Anak kecil","Isim","keluarga","الطِّفْلُ يَلْعَبُ فِي الْحَدِيقَةِ","Anak kecil bermain di taman.","",""],
+["وَلَدٌ","waladun","Anak","Isim","keluarga","الْوَلَدُ ذَكِيٌّ","Anak laki-laki itu cerdas.","اِبْنٌ",""],
+["حَفِيدٌ","ḥafīdun","Cucu","Isim","keluarga","الْحَفِيدُ يَزُورُ جَدَّهُ","Cucu mengunjungi kakeknya.","",""],
+["أَقَارِبُ","aqāribu","Kerabat","Isim","keluarga","أَقَارِبِي كَثِيرُونَ","Kerabatku banyak.","",""],
+["عَائِلَةٌ","‘ā’ilatun","Keluarga","Isim","keluarga","عَائِلَتِي صَغِيرَةٌ","Keluargaku kecil.","أُسْرَةٌ",""],
+["أُسْرَةٌ","usratun","Keluarga","Isim","keluarga","أُسْرَتِي سَعِيدَةٌ","Keluargaku bahagia.","عَائِلَةٌ",""],
+["ضَيْفٌ","ḍaifun","Tamu","Isim","keluarga","الضَّيْفُ فِي الْبَيْتِ","Tamu ada di rumah.","","مُضِيفٌ"],
+["مَائِدَةٌ","mā’idatun","Meja makan","Isim","keluarga","نَجْلِسُ حَوْلَ الْمَائِدَةِ","Kami duduk mengelilingi meja makan.","",""],
+["عِيدٌ","‘īdun","Hari raya","Isim","keluarga","الْعِيدُ يَوْمٌ سَعِيدٌ","Hari raya adalah hari bahagia.","",""],
+["هَدِيَّةٌ","hadiyyatun","Hadiah","Isim","keluarga","أَعْطَيْتُ أُمِّي هَدِيَّةً","Aku memberi ibuku hadiah.","",""],
+["صُورَةٌ","ṣūratun","Foto, gambar","Isim","keluarga","هٰذِهِ صُورَةُ أُسْرَتِي","Ini foto keluargaku.","",""],
+["مَحَبَّةٌ","maḥabbatun","Cinta, kasih","Isim","keluarga","بَيْنَنَا مَحَبَّةٌ","Di antara kami ada kasih sayang.","حُبٌّ","كُرْهٌ"],
+["رَحْمَةٌ","raḥmatun","Kasih sayang","Isim","keluarga","الْأُمُّ مَلِيئَةٌ بِالرَّحْمَةِ","Ibu penuh kasih sayang.","","قَسْوَةٌ"],
+["بِرٌّ","birrun","Berbakti","Isim","keluarga","بِرُّ الْوَالِدَيْنِ وَاجِبٌ","Berbakti kepada orang tua itu wajib.","","عُقُوقٌ"],
+["يَتِيمٌ","yatīmun","Anak yatim","Isim","keluarga","نَرْحَمُ الْيَتِيمَ","Kami menyayangi anak yatim.","",""],
+["أَحَبَّ","aḥabba","Mencintai","Fi’il","keluarga","أَحَبَّ الْوَلَدُ أُمَّهُ","Anak itu mencintai ibunya.","","كَرِهَ"],
+["زَارَ","zāra","Mengunjungi","Fi’il","keluarga","زُرْتُ جَدِّي أَمْسِ","Aku mengunjungi kakekku kemarin.","",""],
+["سَاعَدَ","sā‘ada","Membantu","Fi’il","keluarga","سَاعَدْتُ أُمِّي فِي الْمَطْبَخِ","Aku membantu ibuku di dapur.","أَعَانَ",""],
+["رَبَّى","rabbā","Mendidik, mengasuh","Fi’il","keluarga","رَبَّتْنِي أُمِّي","Ibuku mendidikku.","",""],
+["اِحْتَرَمَ","iḥtarama","Menghormati","Fi’il","keluarga","اِحْتَرَمَ الطِّفْلُ جَدَّهُ","Anak itu menghormati kakeknya.","","أَهَانَ"],
+["عَاشَ","‘āsya","Hidup","Fi’il","keluarga","عَاشَتِ الْأُسْرَةُ فِي سَلَامٍ","Keluarga itu hidup damai.","","مَاتَ"],
+["ضَحِكَ","ḍaḥika","Tertawa","Fi’il","keluarga","ضَحِكَ الْجَدُّ كَثِيرًا","Kakek tertawa banyak.","","بَكَى"],
+["اِجْتَمَعَ","ijtama‘a","Berkumpul","Fi’il","keluarga","اِجْتَمَعَتِ الْأُسْرَةُ لِلْعَشَاءِ","Keluarga berkumpul untuk makan malam.","","تَفَرَّقَ"],
+["أَطَاعَ","aṭā‘a","Menaati","Fi’il","keluarga","أَطَاعَ الْوَلَدُ أَبَاهُ","Anak itu menaati ayahnya.","","عَصَى"],
+["رَجَعَ","raja‘a","Pulang, kembali","Fi’il","keluarga","رَجَعَ أَبِي مِنَ الْعَمَلِ","Ayahku pulang dari kerja.","عَادَ","ذَهَبَ"],
+["شَمْسٌ","syamsun","Matahari","Isim","alam","الشَّمْسُ سَاطِعَةٌ الْيَوْمَ","Matahari bersinar terang hari ini.","","قَمَرٌ"],
+["جَبَلٌ","jabalun","Gunung","Isim","alam","نَصْعَدُ الْجَبَلَ صَبَاحًا","Kami mendaki gunung di pagi hari.","","وَادٍ"],
+["بَحْرٌ","baḥrun","Laut","Isim","alam","الْبَحْرُ وَاسِعٌ وَعَمِيقٌ","Laut itu luas dan dalam.","يَمٌّ","بَرٌّ"],
+["قَمَرٌ","qamarun","Bulan","Isim","alam","الْقَمَرُ يُضِيءُ اللَّيْلَ","Bulan menerangi malam.","","شَمْسٌ"],
+["نَجْمٌ","najmun","Bintang","Isim","alam","أَرَى نَجْمًا لَامِعًا","Aku melihat bintang yang berkilau.","",""],
+["سَمَاءٌ","samā’un","Langit","Isim","alam","السَّمَاءُ صَافِيَةٌ","Langit cerah.","","أَرْضٌ"],
+["أَرْضٌ","arḍun","Bumi, tanah","Isim","alam","نَحْنُ نَعِيشُ عَلَى الْأَرْضِ","Kita hidup di bumi.","","سَمَاءٌ"],
+["سَحَابٌ","saḥābun","Awan","Isim","alam","السَّحَابُ أَبْيَضُ","Awannya putih.","غَيْمٌ",""],
+["مَطَرٌ","maṭarun","Hujan","Isim","alam","الْمَطَرُ يَنْزِلُ كَثِيرًا","Hujan turun deras.","","جَفَافٌ"],
+["رِيحٌ","rīḥun","Angin","Isim","alam","الرِّيحُ بَارِدَةٌ","Anginnya dingin.","",""],
+["ثَلْجٌ","ṡaljun","Salju","Isim","alam","الثَّلْجُ أَبْيَضُ بَارِدٌ","Salju putih dan dingin.","",""],
+["نَهْرٌ","nahrun","Sungai","Isim","alam","يَجْرِي النَّهْرُ إِلَى الْبَحْرِ","Sungai mengalir ke laut.","",""],
+["بُحَيْرَةٌ","buḥairatun","Danau","Isim","alam","الْبُحَيْرَةُ هَادِئَةٌ","Danaunya tenang.","",""],
+["شَاطِئٌ","syāṭi’un","Pantai","Isim","alam","نَلْعَبُ عَلَى الشَّاطِئِ","Kami bermain di pantai.","",""],
+["غَابَةٌ","gābatun","Hutan","Isim","alam","الْغَابَةُ كَبِيرَةٌ","Hutan itu luas.","",""],
+["صَحْرَاءُ","ṣaḥrā’u","Gurun","Isim","alam","الصَّحْرَاءُ حَارَّةٌ","Gurun itu panas.","",""],
+["وَادٍ","wādin","Lembah","Isim","alam","الْقَرْيَةُ فِي الْوَادِي","Desa ada di lembah.","","جَبَلٌ"],
+["جَزِيرَةٌ","jazīratun","Pulau","Isim","alam","بَالِي جَزِيرَةٌ جَمِيلَةٌ","Bali adalah pulau yang indah.","",""],
+["شَجَرَةٌ","syajaratun","Pohon","Isim","alam","الطَّائِرُ عَلَى الشَّجَرَةِ","Burung ada di atas pohon.","",""],
+["وَرْدَةٌ","wardatun","Mawar","Isim","alam","الْوَرْدَةُ حَمْرَاءُ","Mawar itu merah.","",""],
+["زَهْرَةٌ","zahratun","Bunga","Isim","alam","الزَّهْرَةُ جَمِيلَةٌ","Bunga itu indah.","وَرْدَةٌ",""],
+["عُشْبٌ","‘usbun","Rumput","Isim","alam","الْعُشْبُ أَخْضَرُ","Rumputnya hijau.","",""],
+["وَرَقَةٌ","waraqatun","Daun","Isim","alam","سَقَطَتِ الْوَرَقَةُ","Daun itu jatuh.","",""],
+["حَجَرٌ","ḥajarun","Batu","Isim","alam","الْحَجَرُ ثَقِيلٌ","Batu itu berat.","",""],
+["رَمْلٌ","ramlun","Pasir","Isim","alam","الرَّمْلُ نَاعِمٌ","Pasirnya halus.","",""],
+["تُرَابٌ","turābun","Tanah","Isim","alam","التُّرَابُ خَصْبٌ","Tanahnya subur.","",""],
+["نَارٌ","nārun","Api","Isim","alam","النَّارُ حَارَّةٌ","Api itu panas.","","مَاءٌ"],
+["هَوَاءٌ","hawā’un","Udara","Isim","alam","الْهَوَاءُ نَقِيٌّ","Udaranya bersih.","",""],
+["جَوٌّ","jawwun","Cuaca, suasana","Isim","alam","الْجَوُّ جَمِيلٌ الْيَوْمَ","Cuacanya bagus hari ini.","طَقْسٌ",""],
+["بُرْكَانٌ","burkānun","Gunung berapi","Isim","alam","الْبُرْكَانُ خَطِيرٌ","Gunung berapi itu berbahaya.","",""],
+["طَلَعَ","ṭala‘a","Terbit","Fi’il","alam","طَلَعَتِ الشَّمْسُ","Matahari terbit.","","غَرَبَ"],
+["غَرَبَ","garaba","Terbenam","Fi’il","alam","غَرَبَتِ الشَّمْسُ مَسَاءً","Matahari terbenam di sore hari.","غَابَ","طَلَعَ"],
+["هَبَّ","habba","Bertiup","Fi’il","alam","هَبَّتِ الرِّيحُ بِقُوَّةٍ","Angin bertiup kencang.","","سَكَنَ"],
+["نَمَا","namā","Tumbuh","Fi’il","alam","نَمَا الشَّجَرُ سَرِيعًا","Pohon tumbuh cepat.","","ذَبَلَ"],
+["سَالَ","sāla","Mengalir","Fi’il","alam","سَالَ الْمَاءُ مِنَ الْجَبَلِ","Air mengalir dari gunung.","جَرَى",""],
+["ذَابَ","żāba","Mencair","Fi’il","alam","ذَابَ الثَّلْجُ","Salju mencair.","","جَمَدَ"],
+["أَمْطَرَ","amṭara","Menurunkan hujan","Fi’il","alam","أَمْطَرَتِ السَّمَاءُ أَمْسِ","Kemarin hujan turun.","",""],
+["زَرَعَ","zara‘a","Menanam","Fi’il","alam","زَرَعَ الْفَلَّاحُ الْأَرْضَ","Petani menanami tanah.","غَرَسَ","حَصَدَ"],
+["سَقَى","saqā","Menyiram","Fi’il","alam","سَقَيْتُ الزَّهْرَةَ","Aku menyiram bunga.","",""],
+["يَبِسَ","yabisa","Mengering","Fi’il","alam","يَبِسَ الْعُشْبُ","Rumput mengering.","","اِخْضَرَّ"],
+["طَبِيبٌ","ṭabībun","Dokter","Isim","profesi","الطَّبِيبُ يُعَالِجُ الْمَرِيضَ","Dokter mengobati pasien.","","مَرِيضٌ"],
+["مُهَنْدِسٌ","muhandisun","Insinyur","Isim","profesi","الْمُهَنْدِسُ يَبْنِي الْجِسْرَ","Insinyur membangun jembatan.","",""],
+["فَلَّاحٌ","fallāḥun","Petani","Isim","profesi","الْفَلَّاحُ يَزْرَعُ الْأَرُزَّ","Petani menanam padi.","مُزَارِعٌ",""],
+["مُمَرِّضٌ","mumarriḍun","Perawat","Isim","profesi","الْمُمَرِّضُ يَخْدُمُ الْمَرْضَى","Perawat melayani para pasien.","",""],
+["صَيْدَلِيٌّ","ṣaidaliyyun","Apoteker","Isim","profesi","الصَّيْدَلِيُّ يَبِيعُ الدَّوَاءَ","Apoteker menjual obat.","",""],
+["مُحَامٍ","muḥāmin","Pengacara","Isim","profesi","الْمُحَامِي يُدَافِعُ عَنِ الْمُتَّهَمِ","Pengacara membela terdakwa.","",""],
+["قَاضٍ","qāḍin","Hakim","Isim","profesi","الْقَاضِي عَادِلٌ","Hakim itu adil.","",""],
+["شُرْطِيٌّ","syurṭiyyun","Polisi","Isim","profesi","الشُّرْطِيُّ يَحْمِي النَّاسَ","Polisi melindungi orang-orang.","",""],
+["جُنْدِيٌّ","jundiyyun","Prajurit","Isim","profesi","الْجُنْدِيُّ شُجَاعٌ","Prajurit itu berani.","عَسْكَرِيٌّ",""],
+["طَيَّارٌ","ṭayyārun","Pilot","Isim","profesi","الطَّيَّارُ يَقُودُ الطَّائِرَةَ","Pilot menerbangkan pesawat.","",""],
+["سَائِقٌ","sā’iqun","Sopir","Isim","profesi","السَّائِقُ يَقُودُ الْحَافِلَةَ","Sopir mengemudikan bus.","",""],
+["نَجَّارٌ","najjārun","Tukang kayu","Isim","profesi","النَّجَّارُ يَصْنَعُ الْمَكْتَبَ","Tukang kayu membuat meja.","",""],
+["حَدَّادٌ","ḥuddādun","Pandai besi","Isim","profesi","الْحَدَّادُ يَعْمَلُ بِالْحَدِيدِ","Pandai besi bekerja dengan besi.","",""],
+["خَبَّازٌ","khabbāzun","Tukang roti","Isim","profesi","الْخَبَّازُ يَخْبِزُ الْخُبْزَ","Tukang roti memanggang roti.","",""],
+["طَبَّاخٌ","ṭabbākhun","Juru masak","Isim","profesi","الطَّبَّاخُ يُعِدُّ الْغَدَاءَ","Juru masak menyiapkan makan siang.","",""],
+["تَاجِرٌ","tājirun","Pedagang","Isim","profesi","التَّاجِرُ يَبِيعُ وَيَشْتَرِي","Pedagang menjual dan membeli.","",""],
+["بَائِعٌ","bā’i‘un","Penjual","Isim","profesi","الْبَائِعُ فِي السُّوقِ","Penjual ada di pasar.","","مُشْتَرٍ"],
+["مُحَاسِبٌ","muḥāsibun","Akuntan","Isim","profesi","الْمُحَاسِبُ يَحْسِبُ الْأَمْوَالَ","Akuntan menghitung uang.","",""],
+["مُوَظَّفٌ","muwaẓẓafun","Pegawai","Isim","profesi","الْمُوَظَّفُ يَذْهَبُ إِلَى الْمَكْتَبِ","Pegawai pergi ke kantor.","",""],
+["عَامِلٌ","‘āmilun","Pekerja, buruh","Isim","profesi","الْعَامِلُ يَبْنِي الْبَيْتَ","Pekerja membangun rumah.","",""],
+["كَاتِبٌ","kātibun","Penulis","Isim","profesi","الْكَاتِبُ أَلَّفَ كِتَابًا","Penulis menyusun sebuah buku.","مُؤَلِّفٌ",""],
+["صَحَفِيٌّ","ṣaḥafiyyun","Jurnalis","Isim","profesi","الصَّحَفِيُّ يَكْتُبُ الْأَخْبَارَ","Jurnalis menulis berita.","",""],
+["رَسَّامٌ","rassāmun","Pelukis","Isim","profesi","الرَّسَّامُ يَرْسُمُ لَوْحَةً","Pelukis melukis sebuah lukisan.","",""],
+["فَنَّانٌ","fannānun","Seniman","Isim","profesi","الْفَنَّانُ مَوْهُوبٌ","Seniman itu berbakat.","",""],
+["مُبَرْمِجٌ","mubarmijun","Programmer","Isim","profesi","الْمُبَرْمِجُ يَكْتُبُ الْبَرْنَامَجَ","Programmer menulis program.","",""],
+["خَيَّاطٌ","khayyāṭun","Penjahit","Isim","profesi","الْخَيَّاطُ يَخِيطُ الثَّوْبَ","Penjahit menjahit baju.","",""],
+["حَلَّاقٌ","ḥallāqun","Tukang cukur","Isim","profesi","الْحَلَّاقُ يَقُصُّ الشَّعْرَ","Tukang cukur memotong rambut.","",""],
+["صَيَّادٌ","ṣayyādun","Nelayan, pemburu","Isim","profesi","الصَّيَّادُ يَصْطَادُ السَّمَكَ","Nelayan menangkap ikan.","",""],
+["رَاعٍ","rā‘in","Penggembala","Isim","profesi","الرَّاعِي يَرْعَى الْغَنَمَ","Penggembala menggembalakan kambing.","",""],
+["سَفِيرٌ","safīrun","Duta besar","Isim","profesi","السَّفِيرُ يُمَثِّلُ بَلَدَهُ","Duta besar mewakili negaranya.","",""],
+["عَمِلَ","‘amila","Bekerja","Fi’il","profesi","عَمِلَ أَبِي فِي الْمَصْنَعِ","Ayahku bekerja di pabrik.","","اِسْتَرَاحَ"],
+["عَالَجَ","‘ālaja","Mengobati","Fi’il","profesi","عَالَجَ الطَّبِيبُ الْمَرِيضَ","Dokter mengobati pasien.","دَاوَى",""],
+["بَنَى","banā","Membangun","Fi’il","profesi","بَنَى الْعَامِلُ الْجِدَارَ","Pekerja membangun dinding.","","هَدَمَ"],
+["صَنَعَ","ṣana‘a","Membuat","Fi’il","profesi","صَنَعَ النَّجَّارُ كُرْسِيًّا","Tukang kayu membuat kursi.","أَنْتَجَ",""],
+["بَاعَ","bā‘a","Menjual","Fi’il","profesi","بَاعَ التَّاجِرُ الْقُمَاشَ","Pedagang menjual kain.","","اِشْتَرَى"],
+["اِشْتَرَى","isytarā","Membeli","Fi’il","profesi","اِشْتَرَيْتُ كِتَابًا","Aku membeli buku.","","بَاعَ"],
+["قَادَ","qāda","Mengemudi","Fi’il","profesi","قَادَ السَّائِقُ السَّيَّارَةَ","Sopir mengemudikan mobil.","",""],
+["خَدَمَ","khadama","Melayani","Fi’il","profesi","خَدَمَ الْمُوَظَّفُ الزَّبَائِنَ","Pegawai melayani pelanggan.","",""],
+["دَافَعَ","dāfa‘a","Membela","Fi’il","profesi","دَافَعَ الْمُحَامِي عَنْ مُوَكِّلِهِ","Pengacara membela kliennya.","","هَاجَمَ"],
+["طَبَخَ","ṭabakha","Memasak","Fi’il","profesi","طَبَخَ الطَّبَّاخُ الْأَرُزَّ","Juru masak memasak nasi.","أَعَدَّ",""],
+["غُرْفَةٌ","gurfatun","Kamar","Isim","rumah","غُرْفَتِي نَظِيفَةٌ","Kamarku bersih.","","" ],
+["مَطْبَخٌ","maṭbakhun","Dapur","Isim","rumah","أُمِّي فِي الْمَطْبَخِ","Ibuku ada di dapur.","",""],
+["نَافِذَةٌ","nāfiżatun","Jendela","Isim","rumah","افْتَحِ النَّافِذَةَ","Bukalah jendela.","شُبَّاكٌ","بَابٌ"],
+["بَيْتٌ","baitun","Rumah","Isim","rumah","بَيْتِي قَرِيبٌ مِنَ الْمَدْرَسَةِ","Rumahku dekat dari sekolah.","مَنْزِلٌ",""],
+["بَابٌ","bābun","Pintu","Isim","rumah","افْتَحِ الْبَابَ","Bukalah pintu.","",""],
+["سَقْفٌ","saqfun","Atap, plafon","Isim","rumah","السَّقْفُ عَالٍ","Atapnya tinggi.","",""],
+["جِدَارٌ","jidārun","Dinding","Isim","rumah","الْجِدَارُ أَبْيَضُ","Dindingnya putih.","حَائِطٌ",""],
+["أَرْضِيَّةٌ","arḍiyyatun","Lantai","Isim","rumah","الْأَرْضِيَّةُ نَظِيفَةٌ","Lantainya bersih.","",""],
+["سُلَّمٌ","sullamun","Tangga","Isim","rumah","أَصْعَدُ السُّلَّمَ","Aku menaiki tangga.","",""],
+["حَدِيقَةٌ","ḥadīqatun","Taman","Isim","rumah","فِي الْبَيْتِ حَدِيقَةٌ صَغِيرَةٌ","Di rumah ada taman kecil.","",""],
+["سَرِيرٌ","sarīrun","Tempat tidur","Isim","rumah","أَنَامُ عَلَى السَّرِيرِ","Aku tidur di tempat tidur.","",""],
+["خِزَانَةٌ","khizānatun","Lemari","Isim","rumah","الْمَلَابِسُ فِي الْخِزَانَةِ","Pakaian ada di lemari.","",""],
+["مِرْآةٌ","mir’ātun","Cermin","Isim","rumah","أَنْظُرُ فِي الْمِرْآةِ","Aku bercermin.","",""],
+["سَجَّادَةٌ","sajjādatun","Karpet, sajadah","Isim","rumah","السَّجَّادَةُ نَاعِمَةٌ","Karpetnya lembut.","",""],
+["سِتَارَةٌ","sitāratun","Gorden","Isim","rumah","السِّتَارَةُ زَرْقَاءُ","Gordennya biru.","",""],
+["مِصْبَاحٌ","miṣbāḥun","Lampu","Isim","rumah","الْمِصْبَاحُ فِي الْغُرْفَةِ","Lampu ada di kamar.","",""],
+["مِرْوَحَةٌ","mirwaḥatun","Kipas","Isim","rumah","الْمِرْوَحَةُ تَعْمَلُ","Kipasnya menyala.","",""],
+["ثَلَّاجَةٌ","ṡallājatun","Kulkas","Isim","rumah","الْمَاءُ فِي الثَّلَّاجَةِ","Air ada di kulkas.","",""],
+["مَوْقِدٌ","mauqidun","Kompor","Isim","rumah","الْقِدْرُ عَلَى الْمَوْقِدِ","Panci ada di atas kompor.","",""],
+["صَحْنٌ","ṣaḥnun","Piring","Isim","rumah","الْأَرُزُّ فِي الصَّحْنِ","Nasi ada di piring.","طَبَقٌ",""],
+["كُوبٌ","kūbun","Gelas","Isim","rumah","أَشْرَبُ الْمَاءَ مِنَ الْكُوبِ","Aku minum air dari gelas.","كَأْسٌ",""],
+["مِلْعَقَةٌ","mil‘aqatun","Sendok","Isim","rumah","آكُلُ بِالْمِلْعَقَةِ","Aku makan dengan sendok.","",""],
+["سِكِّينٌ","sikkīnun","Pisau","Isim","rumah","السِّكِّينُ حَادٌّ","Pisaunya tajam.","",""],
+["حَمَّامٌ","ḥammāmun","Kamar mandi","Isim","rumah","الْحَمَّامُ نَظِيفٌ","Kamar mandinya bersih.","",""],
+["صَالَةٌ","ṣālatun","Ruang tamu","Isim","rumah","نَجْلِسُ فِي الصَّالَةِ","Kami duduk di ruang tamu.","",""],
+["مِفْتَاحٌ","miftāḥun","Kunci","Isim","rumah","أَيْنَ مِفْتَاحُ الْبَابِ؟","Di mana kunci pintu?","",""],
+["كَنَبَةٌ","kanabatun","Sofa","Isim","rumah","الْكَنَبَةُ مُرِيحَةٌ","Sofanya nyaman.","",""],
+["مِكْنَسَةٌ","miknasatun","Sapu","Isim","rumah","الْمِكْنَسَةُ فِي الْمَطْبَخِ","Sapunya ada di dapur.","",""],
+["غَسَّالَةٌ","gassālatun","Mesin cuci","Isim","rumah","الْغَسَّالَةُ تَغْسِلُ الثِّيَابَ","Mesin cuci mencuci pakaian.","",""],
+["شُرْفَةٌ","syurfatun","Balkon","Isim","rumah","نَجْلِسُ فِي الشُّرْفَةِ مَسَاءً","Kami duduk di balkon sore hari.","",""],
+["سَكَنَ","sakana","Tinggal","Fi’il","rumah","سَكَنَتِ الْأُسْرَةُ فِي بَيْتٍ جَدِيدٍ","Keluarga itu tinggal di rumah baru.","أَقَامَ",""],
+["دَخَلَ","dakhala","Masuk","Fi’il","rumah","دَخَلَ أَبِي الْبَيْتَ","Ayahku masuk rumah.","","خَرَجَ"],
+["خَرَجَ","kharaja","Keluar","Fi’il","rumah","خَرَجْتُ مِنَ الْغُرْفَةِ","Aku keluar dari kamar.","","دَخَلَ"],
+["فَتَحَ","fataḥa","Membuka","Fi’il","rumah","فَتَحَتْ أُمِّي النَّافِذَةَ","Ibuku membuka jendela.","","أَغْلَقَ"],
+["أَغْلَقَ","aglaqa","Menutup","Fi’il","rumah","أَغْلَقْتُ الْبَابَ","Aku menutup pintu.","سَدَّ","فَتَحَ"],
+["نَظَّفَ","naẓẓafa","Membersihkan","Fi’il","rumah","نَظَّفْتُ غُرْفَتِي","Aku membersihkan kamarku.","","وَسَّخَ"],
+["كَنَسَ","kanasa","Menyapu","Fi’il","rumah","كَنَسَتْ أُخْتِي الْأَرْضَ","Saudariku menyapu lantai.","",""],
+["غَسَلَ","gasala","Mencuci","Fi’il","rumah","غَسَلْتُ الصُّحُونَ","Aku mencuci piring-piring.","",""],
+["نَامَ","nāma","Tidur","Fi’il","rumah","نَامَ الطِّفْلُ مُبَكِّرًا","Anak itu tidur lebih awal.","","اِسْتَيْقَظَ"],
+["أَضَاءَ","aḍā’a","Menerangi","Fi’il","rumah","أَضَاءَ الْمِصْبَاحُ الْغُرْفَةَ","Lampu menerangi kamar.","","أَطْفَأَ"],
+["خُبْزٌ","khubzun","Roti","Isim","makanan","آكُلُ الْخُبْزَ صَبَاحًا","Aku makan roti di pagi hari.","",""],
+["مَاءٌ","mā’un","Air","Isim","makanan","أَشْرَبُ الْمَاءَ كَثِيرًا","Aku banyak minum air.","",""],
+["أَكَلَ","akala","Makan","Fi’il","makanan","أَكَلَ الْوَلَدُ التُّفَّاحَةَ","Anak itu makan apel.","تَنَاوَلَ","شَرِبَ"],
+["اِسْمٌ","ismun","Nama","Isim","kenal","اِسْمِي أَحْمَدُ","Namaku Ahmad.","",""],
+["مَرْحَبًا","marḥaban","Selamat datang","Isim","kenal","مَرْحَبًا بِكَ يَا صَدِيقِي","Selamat datang, temanku.","أَهْلًا",""],
+["سَلَامٌ","salāmun","Salam, damai","Isim","kenal","السَّلَامُ عَلَيْكُمْ","Semoga keselamatan atas kalian.","أَمَانٌ","حَرْبٌ"],
+["جَامِعَةٌ","jāmi‘atun","Universitas","Isim","kampus","أَدْرُسُ فِي الْجَامِعَةِ","Saya kuliah di universitas.","",""],
+["كُلِّيَّةٌ","kulliyyatun","Fakultas","Isim","kampus","كُلِّيَّتِي كَبِيرَةٌ","Fakultasku besar.","",""],
+["مُحَاضَرَةٌ","muḥāḍaratun","Kuliah, ceramah","Isim","kampus","الْمُحَاضَرَةُ تَبْدَأُ الْآنَ","Kuliah dimulai sekarang.","دَرْسٌ",""],
+["قِرَاءَةٌ","qirā’atun","Membaca","Isim","hobi","هِوَايَتِي الْقِرَاءَةُ","Hobiku membaca.","","كِتَابَةٌ"],
+["سِبَاحَةٌ","sibāḥatun","Berenang","Isim","hobi","أُحِبُّ السِّبَاحَةَ","Aku suka berenang.","",""],
+["رَسْمٌ","rasmun","Menggambar","Isim","hobi","أُمَارِسُ الرَّسْمَ كُلَّ يَوْمٍ","Aku menggambar setiap hari.","",""],
+["مِحْرَابٌ","miḥrābun","Mihrab","Isim","masjid","يَقِفُ الْإِمَامُ فِي الْمِحْرَابِ","Imam berdiri di mihrab.","",""],
+["مِنْبَرٌ","minbarun","Mimbar","Isim","masjid","يَخْطُبُ الْخَطِيبُ عَلَى الْمِنْبَرِ","Khatib berkhotbah di mimbar.","",""],
+["إِمَامٌ","imāmun","Imam","Isim","masjid","الْإِمَامُ يَقْرَأُ الْقُرْآنَ","Imam membaca Al-Qur’an.","","مَأْمُومٌ"],
+["مَكْتَبَةٌ","maktabatun","Perpustakaan","Isim","pustaka","أَقْرَأُ فِي الْمَكْتَبَةِ","Aku membaca di perpustakaan.","",""],
+["رَفٌّ","raffun","Rak","Isim","pustaka","الْكُتُبُ عَلَى الرَّفِّ","Buku-buku ada di rak.","",""],
+["مَجَلَّةٌ","majallatun","Majalah","Isim","pustaka","اِشْتَرَيْتُ مَجَلَّةً عِلْمِيَّةً","Aku membeli majalah ilmiah.","",""],
+["قِطَّةٌ","qiṭṭatun","Kucing","Isim","hewan","الْقِطَّةُ تَشْرَبُ الْحَلِيبَ","Kucing minum susu.","","كَلْبٌ"],
+["أَسَدٌ","asadun","Singa","Isim","hewan","الْأَسَدُ مَلِكُ الْغَابَةِ","Singa adalah raja hutan.","لَيْثٌ",""],
+["طَائِرٌ","ṭā’irun","Burung","Isim","hewan","الطَّائِرُ يَطِيرُ عَالِيًا","Burung terbang tinggi.","عُصْفُورٌ",""],
+["كُرَةٌ","kuratun","Bola","Isim","olahraga","يَلْعَبُونَ بِالْكُرَةِ","Mereka bermain bola.","",""],
+["جَرَى","jarā","Berlari","Fi’il","olahraga","جَرَى الْوَلَدُ فِي الْمَلْعَبِ","Anak itu berlari di lapangan.","رَكَضَ","وَقَفَ"],
+["لَاعِبٌ","lā‘ibun","Pemain","Isim","olahraga","اللَّاعِبُ مَاهِرٌ","Pemain itu terampil.","",""],
+["دَوَاءٌ","dawā’un","Obat","Isim","sehat","أَتَنَاوَلُ الدَّوَاءَ مَرَّتَيْنِ","Aku minum obat dua kali.","عِلَاجٌ","دَاءٌ"],
+["مُسْتَشْفًى","mustasyfan","Rumah sakit","Isim","sehat","ذَهَبَ الْمَرِيضُ إِلَى الْمُسْتَشْفَى","Pasien pergi ke rumah sakit.","",""],
+["صِحَّةٌ","ṣiḥḥatun","Kesehatan","Isim","sehat","الصِّحَّةُ تَاجٌ عَلَى رُؤُوسِ الْأَصِحَّاءِ","Kesehatan adalah mahkota bagi orang sehat.","عَافِيَةٌ","مَرَضٌ"],
+["سَفَرٌ","safarun","Perjalanan","Isim","safar","سَفَرُنَا طَوِيلٌ","Perjalanan kami panjang.","رِحْلَةٌ","إِقَامَةٌ"],
+["مَطَارٌ","maṭārun","Bandara","Isim","safar","نَصِلُ إِلَى الْمَطَارِ مُبَكِّرًا","Kami tiba di bandara lebih awal.","",""],
+["حَقِيبَةٌ","ḥaqībatun","Koper, tas","Isim","safar","حَقِيبَتِي ثَقِيلَةٌ","Tasku berat.","",""],
+["حَاسُوبٌ","ḥāsūbun","Komputer","Isim","tekno","أَكْتُبُ الْبَحْثَ عَلَى الْحَاسُوبِ","Aku menulis riset di komputer.","",""],
+["هَاتِفٌ","hātifun","Telepon","Isim","tekno","هَاتِفِي جَدِيدٌ","Teleponku baru.","جَوَّالٌ",""],
+["شَاشَةٌ","syāsyatun","Layar","Isim","tekno","الشَّاشَةُ وَاضِحَةٌ","Layarnya jelas.","",""],
+["شَبَكَةٌ","syabakatun","Jaringan","Isim","internet","الشَّبَكَةُ ضَعِيفَةٌ هُنَا","Jaringan lemah di sini.","",""],
+["مَوْقِعٌ","mawqi‘un","Situs web, lokasi","Isim","internet","أَزُورُ هٰذَا الْمَوْقِعَ يَوْمِيًّا","Aku mengunjungi situs ini setiap hari.","",""],
+["بَحَثَ","baḥaṡa","Mencari","Fi’il","internet","بَحَثْتُ عَنِ الْمَعْلُومَاتِ","Aku mencari informasi.","فَتَّشَ","وَجَدَ"],
+["جَرِيدَةٌ","jarīdatun","Koran","Isim","media","أَقْرَأُ الْجَرِيدَةَ صَبَاحًا","Aku membaca koran di pagi hari.","صَحِيفَةٌ",""],
+["خَبَرٌ","khabarun","Berita","Isim","media","سَمِعْتُ خَبَرًا مُهِمًّا","Aku mendengar berita penting.","نَبَأٌ",""],
+["تِلْفَازٌ","tilfāzun","Televisi","Isim","media","نُشَاهِدُ التِّلْفَازَ مَعًا","Kami menonton televisi bersama.","",""],
+["صَلَاةٌ","ṣalātun","Salat","Isim","ibadah","أُصَلِّي الْفَجْرَ فِي الْمَسْجِدِ","Aku salat Subuh di masjid.","",""],
+["صَوْمٌ","ṣaumun","Puasa","Isim","ibadah","الصَّوْمُ فِي رَمَضَانَ فَرْضٌ","Puasa Ramadan itu wajib.","صِيَامٌ","إِفْطَارٌ"],
+["دُعَاءٌ","du‘ā’un","Doa","Isim","ibadah","أَدْعُو لِوَالِدَيَّ","Aku berdoa untuk kedua orang tuaku.","",""],
+["مُجْتَمَعٌ","mujtama‘un","Masyarakat","Isim","sosial","نَحْنُ جُزْءٌ مِنَ الْمُجْتَمَعِ","Kita bagian dari masyarakat.","",""],
+["جَارٌ","jārun","Tetangga","Isim","sosial","جَارِي كَرِيمٌ","Tetanggaku dermawan.","",""],
+["تَعَاوَنَ","ta‘āwana","Bergotong royong","Fi’il","sosial","تَعَاوَنَ النَّاسُ فِي بِنَاءِ الْمَسْجِدِ","Orang-orang bergotong royong membangun masjid.","سَاعَدَ",""]
+];
+var st={tab:"home",q:"",cat:"",jenis:"",fav:new Set(),seen:new Set(),score:[0,0],known:new Set(),xp:0,streak:0,last:""};
+try{var s=JSON.parse(localStorage.getItem("kat")||"{}");st.fav=new Set(s.f||[]);st.seen=new Set(s.s||[]);st.score=s.c||[0,0];st.known=new Set(s.k||[]);st.xp=s.x||0;st.streak=s.sk||0;st.last=s.l||""}catch(e){}
+function save(){try{localStorage.setItem("kat",JSON.stringify({f:[...st.fav],s:[...st.seen],c:st.score,k:[...st.known],x:st.xp,sk:st.streak,l:st.last}))}catch(e){}}
+var $=function(i){return document.getElementById(i)};
+function norm(t){return t.normalize("NFD").replace(/[\u064B-\u0652\u0670\u0300-\u036f]/g,"").replace(/[أإآ]/g,"ا").toLowerCase().trim()}
+function catName(k){return CATS.filter(function(c){return c[0]==k})[0]}
+function match(i){var w=W[i],q=norm(st.q);
+ if(st.cat&&w[4]!=st.cat)return false;if(st.jenis&&w[3]!=st.jenis)return false;
+ return !q||norm(w[0]).indexOf(q)>-1||norm(w[1]).indexOf(q)>-1||norm(w[2]).indexOf(q)>-1}
+function rowHtml(i){var w=W[i];return '<div class="row" style="padding:0"><button class="row" style="border:0;background:none" data-open="'+i+'"><span class="ar">'+w[0]+'</span><span class="m"><b>'+w[2]+'</b><small>'+w[1]+'</small></span><span class="tag">'+w[3]+'</span></button><button class="star" data-fav="'+i+'" aria-pressed="'+st.fav.has(i)+'" aria-label="Simpan ke favorit">'+(st.fav.has(i)?"★":"☆")+'</button></div>'}
+function listHtml(idx,msg){return idx.length?'<div class="list">'+idx.map(rowHtml).join("")+'</div>':'<div class="empty">'+msg+'</div>'}
+function searchBox(){return '<div class="search"><span aria-hidden="true">🔍</span><input id="q" type="search" placeholder="Cari kosakata Arab atau Indonesia…" value="'+st.q.replace(/"/g,"&quot;")+'" aria-label="Cari kosakata"></div>'}
+function catsHtml(){return '<div class="cats">'+CATS.map(function(c){var n=W.filter(function(w){return w[4]==c[0]}).length,k=W.filter(function(w,i){return w[4]==c[0]&&st.known.has(i)}).length;return '<button class="cat" style="--h:'+HUE[c[0]]+'" data-cat="'+c[0]+'" aria-pressed="'+(st.cat==c[0])+'"><span class="ctop"><span class="cic">'+IC[c[0]]+'</span><span class="ar">'+c[1]+'</span></span><b>'+c[2]+'</b><span>'+c[3]+' · '+n+' kata</span><div class="bar" style="margin:6px 0 0"><i style="width:'+Math.round(k/n*100)+'%"></i></div></button>'}).join("")+'</div>'}
+function render(){
+ var h="";
+ if(st.tab=="home"){
+  h+='<section class="hero"><p class="ar">تَعَلَّمِ الْعَرَبِيَّةَ بِالْمَوْضُوعَاتِ</p><h2>Jelajahi dunia kosakata Arab</h2><p>Belajar mufradat per tema, lengkap dengan harakat dan contoh kalimat.</p>'+searchBox()+'</section>';
+  h+=topHtml()+'<h3>Kategori tematik</h3>'+catsHtml();
+  var pick=W.map(function(_,i){return i}).filter(function(i){return !st.cat||W[i][4]==st.cat}).slice(0,st.cat?20:4);
+  h+='<h3>'+(st.cat?"Kosakata "+catName(st.cat)[2]:"Kosakata pilihan")+'</h3>'+listHtml(pick,"")+''+gamesHtml()+'';
+ }else if(st.tab=="dict"){
+  var idx=W.map(function(_,i){return i}).filter(match);
+  h+='<h3 style="margin-top:8px">Kamus</h3>'+searchBox()+'<div class="fil">'+jChips()+'</div><div class="fil">'+tChips(1)+'</div>'+'<p class="cnt">'+idx.length+' kata ditemukan</p>'+listHtml(idx,"Tidak ada kata yang cocok. Coba tulis tanpa harakat atau ganti kata kunci.");
+ }else if(st.tab=="hafal"){h+=hafalHtml()}else if(st.tab=="fav"){
+  var f=[...st.fav];h+='<h3 style="margin-top:8px">Kosakata favorit</h3>'+listHtml(f,"Belum ada favorit. Ketuk ☆ pada kata untuk menyimpannya di sini.");
+ }else{
+  var p=Math.round(st.seen.size/W.length*100),tot=st.score[1],acc=tot?Math.round(st.score[0]/tot*100):0;
+  h+='<h3 style="margin-top:8px">Riwayat belajar</h3><div class="stats"><div><b>'+st.seen.size+'</b><span>Kata dipelajari</span></div><div><b>'+st.fav.size+'</b><span>Favorit</span></div><div><b>'+acc+'%</b><span>Akurasi kuis</span></div></div>';
+  h+='<div class="card" style="margin-top:12px"><b>Progres kosakata</b><div class="bar"><i style="width:'+p+'%"></i></div><small style="color:var(--mute)">'+st.seen.size+' dari '+W.length+' kata ('+p+'%)</small></div>';
+  h+=badgesHtml()+'<h3>Terakhir dilihat</h3>'+listHtml([...st.seen].reverse().slice(0,5),"Buka sebuah kata untuk mulai mencatat progres.")+'<p style="margin-top:14px"><button class="btn o" data-quiz="1">Latihan kuis</button> <button class="btn o" data-guide="1">Panduan penggunaan</button></p>';
+ }
+ $("main").innerHTML=h;
+ var T=[["home","🏠","Beranda"],["dict","📖","Kamus"],["hafal","🃏","Hafalan"],["fav","★","Favorit"],["me","👤","Profil"]];
+ $("nav").innerHTML=T.map(function(t){return '<button data-tab="'+t[0]+'"'+(st.tab==t[0]?' aria-current="page"':'')+'><span aria-hidden="true">'+t[1]+'</span>'+t[2]+'</button>'}).join("");
+}
+var TT=0;
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(TT);TT=setTimeout(function(){t.classList.remove("on")},4500)}
+
+function sheet(h){$("sheet").innerHTML=h;$("bg").classList.add("on")}
+function closeSheet(){$("bg").classList.remove("on");render()}
+function detail(i){var w=W[i];if(!st.seen.has(i))addXP(2);st.seen.delete(i);st.seen.add(i);save();
+ sheet('<div style="display:flex;justify-content:space-between;align-items:center"><span class="tag">'+w[3]+' · '+catName(w[4])[2]+'</span><button class="ic" data-close="1" aria-label="Tutup">✕</button></div><p class="big ar">'+w[0]+'</p><p class="lat">'+w[1]+'</p><p class="mean">'+w[2]+'</p><div class="acts"><button class="btn o" data-fav="'+i+'" aria-pressed="'+st.fav.has(i)+'">'+(st.fav.has(i)?"★ Tersimpan":"☆ Favorit")+'</button></div><h3>Contoh kalimat</h3><div class="ex"><div class="ar">'+w[5]+'</div><div>'+w[6]+'</div></div><div class="two"><div class="card"><small style="color:var(--mute)">Sinonim</small><div class="ar" style="font-size:22px">'+(w[7]||"—")+'</div></div><div class="card"><small style="color:var(--mute)">Antonim</small><div class="ar" style="font-size:22px">'+(w[8]||"—")+'</div></div></div>');render()}
+var Q=null;
+function quiz(){var ids=W.map(function(_,i){return i}).sort(function(){return Math.random()-.5}).slice(0,5);Q={ids:ids,n:0,ok:0};qn()}
+function qn(){
+ if(Q.n>=Q.ids.length){st.score[0]+=Q.ok;st.score[1]+=Q.ids.length;save();render();sheet('<h3 style="margin-top:0">Kuis selesai</h3><p class="big" style="font-size:44px">'+Q.ok+'/'+Q.ids.length+'</p><p class="lat">'+(Q.ok>=4?"Kerja bagus! Mufradatmu makin kuat.":"Ulangi untuk memperkuat hafalan.")+'</p><div class="acts"><button class="btn" data-quiz="1">Main lagi</button><button class="btn o" data-close="1">Tutup</button></div>');return}
+ var a=Q.ids[Q.n],o=[a];W.map(function(_,i){return i}).sort(function(){return Math.random()-.5}).forEach(function(i){if(o.length<4&&W[i][2]!=W[a][2])o.push(i)});o.sort(function(){return Math.random()-.5});
+ sheet('<div style="display:flex;justify-content:space-between"><b>Soal '+(Q.n+1)+' dari '+Q.ids.length+'</b><button class="ic" data-close="1" aria-label="Tutup">✕</button></div><p class="big ar">'+W[a][0]+'</p><p class="lat">Apa arti kata ini?</p>'+o.map(function(i){return '<button class="opt" data-ans="'+i+'" data-right="'+a+'">'+W[i][2]+'</button>'}).join(""))}
+var IC={sekolah:"🏫",keluarga:"👨‍👩‍👧",alam:"🌿",profesi:"👨‍⚕️",rumah:"🏠",makanan:"🍽️",kenal:"🤝",kampus:"🎓",hobi:"🎨",masjid:"🕌",pustaka:"📚",hewan:"🐾",olahraga:"⚽",sehat:"🩺",safar:"✈️",tekno:"💻",internet:"🌐",media:"📰",ibadah:"🤲",sosial:"🏘️"};
+var HUE={sekolah:215,keluarga:335,alam:150,profesi:28,rumah:265,makanan:2,kenal:190,kampus:235,hobi:300,masjid:165,pustaka:48,hewan:80,olahraga:120,sehat:350,safar:195,tekno:250,internet:275,media:40,ibadah:175,sosial:320};
+function rowHtml(i){var w=W[i],c=catName(w[4]),k=w[3]=="Isim"?"isim":"fl";return '<div class="row '+k+'"><button class="rb" data-open="'+i+'"><span class="ar">'+w[0]+'</span><span class="m"><b>'+w[2]+'</b><small>'+w[1]+'</small><span class="bd"><span class="tag '+k+'">'+(k=="isim"?"Isim · اِسْمٌ":"Fi’il · فِعْلٌ")+'</span><span class="tp" style="--h:'+HUE[w[4]]+'">'+IC[w[4]]+' '+c[2]+'</span></span></span></button><button class="star" data-fav="'+i+'" aria-pressed="'+st.fav.has(i)+'" aria-label="Simpan ke favorit">'+(st.fav.has(i)?"★":"☆")+'</button></div>'}
+function jChips(){return [["","Semua jenis",""],["Isim","Isim · اِسْمٌ","isim"],["Fi’il","Fi’il · فِعْلٌ","fl"]].map(function(x){return '<button class="chip j '+x[2]+'" data-j="'+x[0]+'" aria-pressed="'+(st.jenis==x[0])+'">'+x[1]+'</button>'}).join("")}
+function tChips(a){return (a?'<button class="chip s" data-cat="" aria-pressed="'+!st.cat+'">✨ Semua tema</button>':'')+CATS.map(function(c){return '<button class="chip t'+(a?' s':'')+'" style="--h:'+HUE[c[0]]+'" data-cat="'+c[0]+'" aria-pressed="'+(st.cat==c[0])+'"><span class="ti">'+IC[c[0]]+'</span><span class="tn">'+c[2]+'<span class="ar">'+c[1]+'</span></span></button>'}).join("")}
+var LN=["Pemula","Penjelajah","Pelajar","Mahir","Ustadz"];
+function day(o){return new Date(Date.now()-(o||0)*864e5).toISOString().slice(0,10)}
+function curS(){return st.last==day()||st.last==day(1)?st.streak:0}
+function lvl(){return Math.floor(st.xp/100)+1}
+function addXP(n){if(st.last!=day()){st.streak=st.last==day(1)?st.streak+1:1;st.last=day()}st.xp+=n;save()}
+function pool(c){return W.map(function(_,i){return i}).filter(function(i){return !c||W[i][4]==c})}
+function shuf(a){return a.sort(function(){return Math.random()-.5})}
+function topHtml(){var wi=Math.floor(Date.now()/864e5)%W.length,w=W[wi];return '<div class="stats"><div><b>🔥 '+curS()+'</b><span>Hari beruntun</span></div><div><b>Lv '+lvl()+'</b><span>'+LN[Math.min(lvl()-1,4)]+' · '+st.xp+' XP</span></div><div><b>'+st.known.size+'</b><span>Kata dihafal</span></div></div><div class="bar" title="Menuju level berikutnya"><i style="width:'+(st.xp%100)+'%"></i></div><div class="card wotd"><small style="color:var(--gold);font-weight:700">✨ KATA HARI INI</small><div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap"><span class="ar" style="font-size:38px;color:var(--pri)">'+w[0]+'</span><span style="flex:1;min-width:90px"><b>'+w[2]+'</b><br><small style="color:var(--mute)">'+w[1]+'</small></span><button class="btn" data-open="'+wi+'">Pelajari</button></div></div>'}
+function gamesHtml(){var cn=st.cat?catName(st.cat)[2]:"Semua tema";return '<h3>Berlatih · '+cn+'</h3><div class="games"><button class="game" data-tab="hafal"><span>🃏</span><b>Kartu hafalan</b><small>Buka halaman Hafalan</small></button><button class="game" data-quiz="ar"><span>🎯</span><b>Kuis Arab → Indo</b><small>10 soal · +10 XP per benar</small></button><button class="game" data-quiz="id"><span>🔤</span><b>Kuis Indo → Arab</b><small>Pilih tulisan Arab yang tepat</small></button></div>'}
+function badgesHtml(){var B=[["🔥","Beruntun 3 hari",curS()>=3],["📚","Pelajari 20 kata",st.seen.size>=20],["⭐","Hafal 10 kata",st.known.size>=10],["🎯","Akurasi kuis 80%",st.score[1]>=10&&st.score[0]/st.score[1]>=.8],["🏆","Level 5",lvl()>=5]];return '<h3>Lencana</h3><div class="badges">'+B.map(function(b){return '<span class="bdg'+(b[2]?"":" off")+'">'+b[0]+' '+b[1]+'</span>'}).join("")+'</div>'}
+var QM="ar";
+function quiz(m){QM=m=="id"?"id":"ar";Q={ids:shuf(pool(st.cat)).slice(0,10),n:0,ok:0};qn()}
+function qn(){
+ if(Q.n>=Q.ids.length){addXP(Q.ok*10);st.score[0]+=Q.ok;st.score[1]+=Q.ids.length;save();render();sheet('<h3 style="margin-top:0">Kuis selesai 🎉</h3><p class="big" style="font-size:44px">'+Q.ok+'/'+Q.ids.length+'</p><p class="lat">+'+Q.ok*10+' XP · '+(Q.ok/Q.ids.length>=.8?"Luar biasa! Mufradatmu makin kuat.":"Ulangi untuk memperkuat hafalan.")+'</p><div class="acts"><button class="btn" data-quiz="'+QM+'">Main lagi</button><button class="btn o" data-close="1">Tutup</button></div>');return}
+ var a=Q.ids[Q.n],o=[a];shuf(W.map(function(_,i){return i})).forEach(function(i){if(o.length<4&&i!=a&&W[i][2]!=W[a][2]&&W[i][3]==W[a][3])o.push(i)});shuf(o);
+ var id=QM=="id",q=id?'<p class="mean" style="font-size:28px;margin:18px 0 2px">'+W[a][2]+'</p><p class="lat">Pilih tulisan Arab yang tepat</p>':'<p class="big ar">'+W[a][0]+'</p><p class="lat">Apa arti kata ini?</p>';
+ sheet('<div style="display:flex;justify-content:space-between;align-items:center"><b>Soal '+(Q.n+1)+'/'+Q.ids.length+'</b><button class="ic" data-close="1" aria-label="Tutup">✕</button></div><div class="bar"><i style="width:'+Q.n/Q.ids.length*100+'%"></i></div>'+q+o.map(function(i){return '<button class="opt'+(id?' ar':'')+'" data-ans="'+i+'" data-right="'+a+'"'+(id?' style="font-size:26px;text-align:center"':'')+'>'+(id?W[i][0]:W[i][2])+'</button>'}).join(""))}
+var FC=null;
+function fcStart(){var p=pool(st.cat),m=st.fmode||"new",a=p.filter(function(i){return m=="all"||(m=="new")==!st.known.has(i)});if(!a.length)a=p;FC={ids:shuf(a).slice(0,10),i:0,f:false,k:0};fcShow()}
+function hafalHtml(){var p=pool(st.cat),kn=p.filter(function(i){return st.known.has(i)}),m=st.fmode||"new",av=m=="new"?p.length-kn.length:m=="known"?kn.length:p.length,pc=Math.round(kn.length/p.length*100),cn=st.cat?catName(st.cat)[2]:"Semua tema";
+ return '<h3 style="margin-top:8px">Kartu hafalan</h3><div class="card"><div style="display:flex;justify-content:space-between"><b>'+cn+'</b><span style="color:var(--mute)">'+kn.length+' / '+p.length+' hafal</span></div><div class="bar"><i style="width:'+pc+'%"></i></div><small style="color:var(--mute)">Pilih tema dan jenis kartu, lalu mulai sesi 10 kartu.</small></div><div class="fil" style="margin-top:12px">'+[["new","Belum hafal"],["all","Semua"],["known","Sudah hafal"]].map(function(x){return '<button class="chip" data-fm="'+x[0]+'" aria-pressed="'+(m==x[0])+'">'+x[1]+'</button>'}).join("")+'</div><div class="fil"><button class="chip" data-cat="" aria-pressed="'+!st.cat+'">Semua tema</button>'+tChips(0)+'</div>'+(av?'<button class="btn" data-fc="1" style="width:100%">Mulai sesi · '+Math.min(av,10)+' kartu</button>':'<div class="empty">'+(m=="known"?"Belum ada kata yang ditandai hafal.":"Semua kata di pilihan ini sudah hafal. 🎉 Pilih Semua untuk mengulang.")+'</div>')+'<h3>Sudah hafal ('+kn.length+')</h3>'+listHtml(kn,"Belum ada kata hafal di pilihan ini.")+(kn.length?'<p><button class="btn o" data-rs="1">Reset hafalan pilihan ini</button></p>':'')}
+function fcShow(){
+ if(FC.i>=FC.ids.length){addXP(FC.k*5);render();sheet('<h3 style="margin-top:0">Sesi selesai ✨</h3><p class="big" style="font-size:44px">'+FC.k+'/'+FC.ids.length+'</p><p class="lat">kata ditandai hafal · +'+FC.k*5+' XP</p><div class="acts"><button class="btn" data-fc="1">Sesi baru</button><button class="btn o" data-close="1">Tutup</button></div>');return}
+ var i=FC.ids[FC.i],w=W[i];
+ sheet('<div style="display:flex;justify-content:space-between;align-items:center"><b>Kartu '+(FC.i+1)+'/'+FC.ids.length+'</b><button class="ic" data-close="1" aria-label="Tutup">✕</button></div><div class="fc" data-flip="1">'+(FC.f?'<div class="ar" style="font-size:40px;color:var(--pri)">'+w[0]+'</div><b style="font-size:20px">'+w[2]+'</b><div class="lat">'+w[1]+'</div><div class="ex" style="text-align:left"><div class="ar">'+w[5]+'</div><div>'+w[6]+'</div></div>':'<div class="big ar">'+w[0]+'</div><small style="color:var(--mute)">Ketuk kartu atau tombol Balik kartu untuk melihat arti</small>')+'</div><div class="acts"><button class="btn o" data-flip="1">↻ Balik kartu</button></div><div class="acts"><button class="btn o" data-fcn="0">✗ Belum hafal</button><button class="btn" data-fcn="1">✓ Hafal</button></div>')}
+function guide(){var G=[["🔍","Mencari kata","Ketik kata Arab (dengan atau tanpa harakat), tulisan latin, atau arti Indonesia di kolom pencarian. Hasilnya muncul otomatis di tab Kamus."],["🗂️","Menjelajah tema","Ketuk kartu kategori di Beranda untuk menyaring kosakata per tema. Di tab Kamus ada juga filter jenis kata (isim atau fi’il). Ketuk sekali lagi untuk membatalkan pilihan."],["📖","Membuka detail kata","Ketuk sebuah kata untuk melihat harakat, arti, jenis kata, contoh kalimat, sinonim, dan antonim."],["★","Menyimpan favorit","Ketuk ☆ di samping kata untuk menyimpannya. Semua favorit ada di tab Favorit."],["🃏","Kartu hafalan","Buka tab Hafalan, pilih tema dan jenis kartu, lalu mulai sesi. Balik kartu untuk melihat arti, lalu pilih ✓ Hafal atau ✗ Belum hafal. Kata yang belum hafal muncul lagi di sesi berikutnya."],["🎯","Kuis","Pilih Kuis Arab → Indo atau Indo → Arab. Setiap kuis berisi 10 soal. Pilih satu tema dulu jika ingin berlatih per tema."],["⭐","XP, level, dan lencana","Membuka kata baru +2 XP, jawaban kuis benar +10 XP, kata hafal +5 XP. Belajar setiap hari untuk menjaga streak 🔥. Progres dan lencana ada di tab Profil."],["💾","Penyimpanan data","Kemajuan belajar tersimpan di browser perangkat ini. Data hilang jika data situs dihapus atau jika memakai mode penyamaran."]];
+ sheet('<div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Panduan penggunaan</h3><button class="ic" data-close="1" aria-label="Tutup">✕</button></div><p style="color:var(--mute);margin:6px 0 10px">Ketuk judul untuk membuka penjelasan.</p>'+G.map(function(g,i){return '<details'+(i<2?' open':'')+'><summary>'+g[0]+' '+g[1]+'</summary><p>'+g[2]+'</p></details>'}).join("")+'<div class="acts"><button class="btn" data-close="1">Mulai belajar</button></div>')}
+document.addEventListener("click",function(e){var t=e.target.closest("[data-fc],[data-flip],[data-fcn],[data-fm],[data-rs]");if(!t)return;var d=t.dataset;if(d.fm){st.fmode=d.fm;return render()}if(d.rs){pool(st.cat).forEach(function(i){st.known.delete(i)});save();render();return toast("Hafalan direset")}if(d.fc)return fcStart();if(d.flip){FC.f=!FC.f;return fcShow()}if(d.fcn!==undefined){if(d.fcn=="1"){if(!st.known.has(FC.ids[FC.i]))FC.k++;st.known.add(FC.ids[FC.i])}else st.known.delete(FC.ids[FC.i]);FC.i++;FC.f=false;save();fcShow()}});
+document.addEventListener("click",function(e){var t=e.target.closest("button,.sheet-bg");if(!t)return;var d=t.dataset;
+ if(t.id=="bg"&&e.target==t)return closeSheet();
+ if(d.tab){st.tab=d.tab;return render()}
+ if(d.cat!==undefined){st.cat=st.cat==d.cat?"":d.cat;if(st.tab=="home"&&st.cat){}return render()}
+ if(d.j!==undefined){st.jenis=d.j;return render()}
+ if(d.open)return detail(+d.open);
+ if(d.fav){var i=+d.fav;st.fav.has(i)?st.fav["delete"](i):st.fav.add(i);save();render();if($("bg").classList.contains("on"))detail(i);return}
+ 
+ if(d.guide)return guide();
+ if(d.close)return closeSheet();
+ if(d.quiz)return quiz(d.quiz);
+ if(d.ans!==undefined){var ok=d.ans==d.right;document.querySelectorAll(".opt").forEach(function(b){b.disabled=true;if(b.dataset.ans==d.right)b.classList.add("ok")});if(!ok)t.classList.add("bad");else Q.ok++;Q.n++;setTimeout(qn,900)}
+ if(t.id=="theme"){var r=document.documentElement,dark=r.dataset.theme?r.dataset.theme=="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark"}
+});
+document.addEventListener("input",function(e){if(e.target.id=="q"){st.q=e.target.value;if(st.tab=="home"&&st.q)st.tab="dict";var p=e.target.selectionStart;render();var n=$("q");n.focus();n.setSelectionRange(p,p)}});
+document.addEventListener("keydown",function(e){if(e.key=="Escape")closeSheet()});
+render();try{if(!localStorage.getItem("kat-guide")){localStorage.setItem("kat-guide","1");guide()}}catch(e){}
+</script>
+</body>
+</html>
